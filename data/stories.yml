@@ -1,29 +1,71 @@
 version: "2.0"
 
 stories:
-  - story: hospital search happy path
-    steps:
-      - intent: greet
-      - action: utter_how_can_i_help
-      - intent: search_provider
-        entities:
-          - facility_type: hospital
-          - location: "San Francisco"
-      - action: action_facility_search
-      - intent: thanks
-      - action: utter_goodbye
+- story: happy_path
+  steps:
+  - intent: greet
+  - action: find_facility_types
+  - intent: inform
+    entities:
+    - facility_type: xubh-q36u
+  - action: facility_form
+  - active_loop: facility_form
+  # - active_loop: null
+  - intent: inform
+    entities:
+    - facility_id: 4245
+  - action: find_healthcare_address
+  - action: utter_address
+  - intent: thanks
+  - action: utter_noworries
 
-  - story: hospital search + location
-    steps:
-      - intent: greet
-      - action: utter_how_can_i_help
-      - intent: search_provider
-        entities:
-          - facility_type: hospital
-      - action: utter_ask_location
-      - intent: inform
-        entities:
-          - location: San Francisco
-      - action: action_facility_search
-      - intent: thanks
-      - action: utter_goodbye
+- story: happy_path_multi_requests
+  steps:
+  - intent: greet
+  - action: find_facility_types
+  - intent: inform
+    entities:
+    - facility_type: xubh-q36u
+  - action: facility_form
+  - active_loop: facility_form
+  - intent: inform
+    entities:
+    - facility_id: '747604'
+  - action: find_healthcare_address
+  - action: utter_address
+  - intent: search_provider
+    entities:
+    - facility_type: xubh-q36u
+  - action: facility_form
+  - active_loop: facility_form
+  - intent: inform
+    entities:
+    - facility_id: 4245
+  - action: find_healthcare_address
+  - action: utter_address
+
+- story: happy_path2
+  steps:
+  - intent: search_provider
+    entities:
+    - location: Austin
+    - facility_type: xubh-q36u
+  - action: facility_form
+  - active_loop: facility_form
+  - intent: inform
+    entities:
+    - facility_id: '450871'
+  - action: find_healthcare_address
+  - action: utter_address
+  - intent: thanks
+  - action: utter_noworries
+
+- story: story_goodbye
+  steps:
+  - intent: goodbye
+  - action: utter_goodbye
+
+- story: story_thankyou
+  steps:
+  - intent: thanks
+  - action: utter_noworries
