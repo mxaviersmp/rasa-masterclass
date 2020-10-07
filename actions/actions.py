@@ -111,7 +111,7 @@ class FindFacilityTypes(Action):
                 'payload': payload
             })
 
-        dispatcher.utter_message('utter_greet', buttons=buttons, tracker=tracker)
+        dispatcher.utter_message('utter_greet', buttons=buttons)
         return []
 
 
